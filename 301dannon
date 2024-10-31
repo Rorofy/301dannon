@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+import sys
+import sorts.bubbleSort
+import sorts.insertionSort
+import sorts.mergeSort
+import sorts.quickSort
+import sorts.selectionSort
+
+
+
+def print_help():
+    print("USAGE\n\t./301dannon file\nDESCRIPTION\n\tfile file that contains the number to be sorted, separated by spaces\n")
+
+
+def get_numbers() -> list:
+    try:
+        f = open(sys.argv[1], "r")
+        numbers_str = (f.readline()).split()
+        numbers = list()
+        for i in numbers_str:
+            numbers.append(float(i))
+    except BaseException:
+        print("File not found or in wrong format")
+        sys.exit(84)
+    if (len(numbers) == 0):
+        sys.exit(84)
+    return numbers
+
+
+def check_error():
+    if (len(sys.argv) != 2):
+        print("Usage: ./301dannon file")
+        sys.exit(84)
+    if (sys.argv[1] == "-h"):
+        print_help()
+        sys.exit(0)
+
+
+def main():
+    check_error()
+    numbers = get_numbers()
+    if len(numbers) != 1:
+        print("{} elements" .format(len(numbers)))
+    else:
+        print("1 element")
+    print("Selection sort: {} comparisons" .format(
+        sorts.selectionSort.selectionSort(numbers.copy())))
+    print("Insertion sort: {} comparisons" .format(
+        sorts.insertionSort.insertionSort(numbers.copy())))
+    print("Bubble sort: {} comparisons" .format(
+        sorts.bubbleSort.bubbleSort(numbers.copy())))
+    print("Quicksort: {} comparisons" .format(
+        sorts.quickSort.quickSort(numbers.copy())))
+    print("Merge sort: {} comparisons" .format(
+        sorts.mergeSort.mergeSort(numbers.copy())))
+    return 0
+
+
+main()
